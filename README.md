@@ -56,7 +56,7 @@ My App is a simple Tkinter-based graphical user interface (GUI) application that
 - Enhance file management with more formats (e.g., PDF reading and saving).
 
 ## Author
-Developed by [Your Name]
+Developed by [Student in ATG]
 
 ## License
 This project is open-source and available under the MIT License.
