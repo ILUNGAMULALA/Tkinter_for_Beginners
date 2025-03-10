@@ -1,7 +1,10 @@
 # My App
 
-I was teaching the Basics of Python to my students in the ATG teaching Program. See what they came up with :
-Next thing will be to focus on another important skill in the teaching program. Coding is fun and hope it is become fun for my students as well.
+I was teaching the Basics of Python to my students in the ATG teaching Program. 
+See what they came up with :
+
+Next thing will be to focus on another important skill in the teaching program. 
+Coding is fun and hope it is become fun for my students as well.
 
 ## Description
 My App is a simple Tkinter-based graphical user interface (GUI) application that allows users to validate personal information, manage text files, and interact with a menu-driven system. The application provides functionalities such as:
