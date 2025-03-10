@@ -1,5 +1,7 @@
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import filedialog, messagebox
+import requests
 
 
 # the main window
@@ -11,12 +13,12 @@ root.geometry("400x400")
 
 def send_message():
     def open_file():
-        file_path = filedialog.askopenfilename(title="Open File",
+        file_path = filedialog.askopenfilename(title="Open File", defaultextension=".txt",
                                                filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
         if file_path:
             with open(file_path, "r") as file:
                 content = file.read()
-                text_area.delete("1.0", tk.END) # Clear text area
+                text_area.delete("1.0", tk.END)  # Clear text area
                 text_area.insert(tk.END, content)
 
     # Function to save a file
@@ -38,6 +40,39 @@ def send_message():
 
     open_button = tk.Button(root, text="open", command=open_file)
     open_button.grid(row=6, column=1, columnspan=2, pady=5, padx=5)
+
+
+# Function to fetch and display news
+def getting_news ():
+    clear_screen()
+    def get_news():
+        API_KEY = "374fa488677d488e94dac9ff312e0a8e"  # Replace with your NewsAPI key
+        url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={API_KEY}"
+
+        try:
+            response = requests.get(url)
+            news_data = response.json()
+
+            if news_data["status"] == "ok":
+                articles = news_data["articles"][:10]  # Get top 10 news articles
+                news_text = "\n\n".join([f"{i+1}. {article['title']}" for i, article in enumerate(articles)])
+                news_area.delete("1.0", tk.END)  # Clear previous news
+                news_area.insert(tk.END, news_text)
+            else:
+                messagebox.showerror("Error", "Failed to fetch news. Try again.")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
+    # GUI Setup
+    # root = tk.Tk()
+    # root.title("Latest News")
+
+    news_area = tk.Text(root, wrap="word", font=("Arial", 12))
+    news_area.pack(expand=True, fill="both", padx=10, pady=10)
+
+    refresh_btn = tk.Button(root, text="Get News", command=get_news)
+    refresh_btn.pack(pady=5)
 
 
 
@@ -150,14 +185,14 @@ def createMenu():
     # setting the start
     file_menu=tk.Menu(my_menu, tearoff=0)
 
-    # adding things , the files to the menu
+    # adding things , the files  to the menu
     file_menu.add_command(label="identity", command=main_function)
     file_menu.add_separator()
 
     file_menu.add_command(label="send messages", command=send_message)
     file_menu.add_separator()
 
-    file_menu.add_command(label="news from kenya")
+    file_menu.add_command(label="news from kenya", command=getting_news)
     file_menu.add_separator()
 
     file_menu.add_command(label= "exit_app", command=root.quit)
